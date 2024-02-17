@@ -2,7 +2,26 @@
 import ReactDOM from 'react-dom/client'
 import { App } from './App';
 
+import { createServer } from "miragejs"
 
+createServer({
+  routes(){
+    this.namespace = 'api'
+
+    this.get('/transactions', () => {
+      return [
+        {
+          id: 1,
+          title: 'Teste 1',
+          amount: 400,
+          type: 'deposit',
+          category: 'Food',
+          createAt: new Date(),
+        }
+      ]
+    });
+  }
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>

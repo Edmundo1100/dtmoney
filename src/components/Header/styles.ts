@@ -6,6 +6,12 @@ export const Container = styled.header`
 
 export const Logo = styled.div`
   color: #fff;
+
+  .icone {
+    color: var(--green);
+    font-size: 40px;
+    margin-right: 2rem;
+  }
 `;
 
 export const Content = styled.div`
@@ -30,10 +36,10 @@ export const Content = styled.div`
     border-radius: 0.25rem;
     height: 3rem;
 
-    transition: filter 0.2s ;
+    transition: filter 0.2s;
 
-    &:hover{
-        filter: brightness(0.9);
+    &:hover {
+      filter: brightness(0.9);
     }
   }
 `;

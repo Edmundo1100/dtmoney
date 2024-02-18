@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as S from "./styles";
 import Modal from "react-modal";
 import { FormEvent, useState } from "react";
-import { api } from "../../services/api";
+import { useTransactions } from "../../hooks/useTransactions";
 
 interface NewTransactionProps {
   isOpen: boolean;
@@ -13,21 +13,27 @@ export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: NewTransactionProps) {
-  const [titulo, setTitulo] = useState("");
+  const { createTransaction } = useTransactions();
+  const [titulo, setTitulo] = useState('');
   const [valor, setValor] = useState(0);
-  const [categoria, setCategoria] = useState("");
-  const [type, setType] = useState("deposito");
+  const [categoria, setCategoria] = useState('');
+  const [type, setType] = useState('deposito');
 
-  function handleCreateNewTransaction(event: FormEvent) {
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
-    const data = {
+
+   await createTransaction({
       titulo,
-      valor,
       categoria,
       type,
-    };
+      valor,
+    });
 
-    api.post('/transactions', data);
+    setTitulo('');
+    setValor(0);
+    setType('deposito');
+    setCategoria('');
+    onRequestClose();
   }
 
   return (
@@ -62,9 +68,9 @@ export function NewTransactionModal({
           <S.RadiusBox
             type="button"
             onClick={() => {
-              setType("deposito");
+              setType('deposito');
             }}
-            ativo={type === 'deposito' ? true : false }
+            ativo={type === 'deposito' ? true : false}
             cor="green"
           >
             <i>
@@ -77,8 +83,8 @@ export function NewTransactionModal({
           </S.RadiusBox>
           <S.RadiusBox
             type="button"
-            onClick={() => setType("saida")}
-            ativo={type === 'saida' ?  true : false}
+            onClick={() => setType('retirada')}
+            ativo={type === 'retirada' ? true : false}
             cor="red"
           >
             <i>

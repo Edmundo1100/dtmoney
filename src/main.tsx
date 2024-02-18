@@ -22,6 +22,14 @@ createServer({
           categoria: 'Fixa',
           valor: 1000,
           createdAt: new Date('2024-02-17'),
+        },
+        {
+          id:2,
+          titulo: 'Energia Eletrica',
+          type: 'retirada',
+          categoria: 'Fixa',
+          valor: 200,
+          createdAt: new Date('2024-02-18'),
         }
       ]
     })

@@ -1,7 +1,30 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as S from "./styles";
+import { useTransactions } from "../../hooks/useTransactions";
 
 export function Summary() {
+  const { transactions } = useTransactions();
+
+  console.log(transactions);
+
+  const summary = transactions.reduce(
+    (acc, transaction) => {
+      if (transaction.type === "deposito") {
+        acc.depositos += transaction.valor;
+        acc.total += transaction.valor;
+      } else {
+        acc.retiradas += transaction.valor;
+        acc.total -= transaction.valor;
+      }
+      return acc;
+    },
+    {
+      depositos: 0,
+      retiradas: 0,
+      total: 0,
+    }
+  );
+
   return (
     <S.Container>
       <div>
@@ -14,7 +37,12 @@ export function Summary() {
             ></FontAwesomeIcon>
           </i>
         </header>
-        <strong>R$ 2000,00</strong>
+        <strong>
+          {new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(summary.depositos)}
+        </strong>
       </div>
 
       <div>
@@ -27,7 +55,14 @@ export function Summary() {
             ></FontAwesomeIcon>
           </i>
         </header>
-        <strong> - R$ 500,00</strong>
+        <strong>
+          {" "}
+          -
+          {new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(summary.retiradas)}
+        </strong>
       </div>
 
       <div className="cardTotal">
@@ -37,7 +72,12 @@ export function Summary() {
             <FontAwesomeIcon icon="dollar-sign"></FontAwesomeIcon>
           </i>
         </header>
-        <strong>R$ 1500,00</strong>
+        <strong>
+          {new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(summary.total)}
+        </strong>
       </div>
     </S.Container>
   );

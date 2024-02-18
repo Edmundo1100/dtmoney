@@ -1,11 +1,11 @@
 import { GlobalStyle } from "./styles/global";
 import './styles/fontAwesomeIcons';
 import { Dashboard } from "./components/dashboard";
-import { Header } from "./components/header";
 import Modal from "react-modal";
 import { useState } from "react";
 import { NewTransactionModal } from "./components/newTransactionModal";
 import { TransactionProvider } from "./hooks/useTransactions";
+import { Header } from "./components/Header";
 
 Modal.setAppElement('#root');
 
